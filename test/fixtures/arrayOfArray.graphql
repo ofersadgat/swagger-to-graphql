@@ -1,0 +1,9 @@
+type get_swagger_graphql_arrayOfArray_items_items {
+  """default field"""
+  empty: String
+}
+
+type Query {
+  """Returns an array of arrays"""
+  get_swagger_graphql_arrayOfArray: [[get_swagger_graphql_arrayOfArray_items_items]]
+}

@@ -27,6 +27,8 @@ const getSuccessResponse = (responses: Responses) => {
     return code[0] === '2';
   });
 
+  resp = resp || responses.default;
+
   return resp && resp.schema;
 };
 

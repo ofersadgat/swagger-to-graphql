@@ -3,7 +3,7 @@ import type {GraphQLParameters, Endpoint, GraphQLType, RootGraphQLSchema, Swagge
 import rp from 'request-promise';
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 import { getAllEndPoints, loadSchema } from './swagger';
-import { createGQLObject, mapParametersToFields } from './typeMap';
+import { createGQLObject, jsonSchemaTypeToGraphQL, mapParametersToFields } from './typeMap';
 
 type Endpoints = {[string]: Endpoint};
 
@@ -35,9 +35,9 @@ const schemaFromEndpoints = (endpoints: Endpoints, proxyUrl, headers) => {
 
 const resolver = (endpoint: Endpoint, proxyUrl: ?(Function | string), customHeaders = {}) =>
   async (_, args: GraphQLParameters, opts: SwaggerToGraphQLOptions) => {
-    const proxy = !proxyUrl ? opts.GQLProxyBaseUrl : (typeof proxyUrl === 'function' ? proxyUrl(opts) : proxyUrl);
+    const proxy = !proxyUrl ? opts && opts.GQLProxyBaseUrl : (typeof proxyUrl === 'function' ? proxyUrl(opts) : proxyUrl);
     const req = endpoint.request(args, proxy);
-    if (opts.headers) {
+    if (opts && opts.headers) {
       req.headers = Object.assign(customHeaders, req.headers, opts.headers);
     }
     const res = await rp(req);
@@ -49,7 +49,9 @@ const getFields = (endpoints, isMutation, gqlTypes, proxyUrl, headers): GraphQLT
     return !!endpoints[typeName].mutation === !!isMutation;
   }).reduce((result, typeName) => {
     const endpoint = endpoints[typeName];
-    const type = createGQLObject(endpoint.response, typeName, false, gqlTypes);
+    const type = endpoint.response ?
+      jsonSchemaTypeToGraphQL({schema: endpoint.response}, typeName, false, gqlTypes) :
+      createGQLObject({type: 'object'}, 'None', false, gqlTypes);
     const gType: GraphQLType = {
       type,
       description: endpoint.description,

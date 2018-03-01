@@ -1,0 +1,55 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Fake API",
+        "description": "For testing any"
+    },
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/swagger-graphql/any": {
+            "get": {
+                "description": "A retrieves a random type",
+                "parameters": [{
+                    "in": "query",
+                    "name": "body",
+                    "schema": {}
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": null,
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates an any object",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "schema": {}
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": null,
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    }
+}
