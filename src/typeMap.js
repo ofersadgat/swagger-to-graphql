@@ -12,7 +12,7 @@ const primitiveTypes = {
   integer: graphql.GraphQLInt,
   number: graphql.GraphQLInt,
   boolean: graphql.GraphQLBoolean,
-  object: graphql.GraphQLObjectType
+  object: GraphQLJSON,
 };
 
 const isObjectType = (jsonSchema) =>
@@ -77,7 +77,10 @@ export const createGQLObject = (jsonSchema: JSONSchemaType, title: string, isInp
       return new graphql.GraphQLList(createGQLObject(jsonSchema.items.schema, title + '_items', isInputType, gqlTypes));
     } else if (isObjectType(jsonSchema.items)) {
       return new graphql.GraphQLList(createGQLObject(jsonSchema.items, title + '_items', isInputType, gqlTypes));
+    } else if (!jsonSchema.items){
+      return new graphql.GraphQLList(GraphQLJSON);
     }
+
     return new graphql.GraphQLList(getPrimitiveTypes(jsonSchema.items));
   } else if (jsonSchema.type !== '' && jsonSchema.type !== 'object' && jsonSchema.type) {
     return getPrimitiveTypes(jsonSchema);
