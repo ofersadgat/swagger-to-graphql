@@ -16,7 +16,7 @@
   },
   "peerDependencies": {
     "graphql": "^0.13.1",
-    "graphql-type-json": "^0.2.0",
+    "graphql-type-json": "^0.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
