@@ -1,9 +1,9 @@
-type get_swagger_graphql_arrayOfArray_items_items {
-  """default field"""
-  empty: String
-}
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
 
 type Query {
   """Returns an array of arrays"""
-  get_swagger_graphql_arrayOfArray: [[get_swagger_graphql_arrayOfArray_items_items]]
+  get_swagger_graphql_arrayOfArray: [[JSON]]
 }

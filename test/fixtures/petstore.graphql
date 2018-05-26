@@ -8,38 +8,33 @@ input CategoryInput {
   name: String
 }
 
-type getInventory {
-  """default field"""
-  empty: String
-}
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
 
 type Mutation {
-  addPet(body: PetInput): None
-  updatePet(body: PetInput): None
-  updatePetWithForm(petId: String, name: String, status: String): None
-  deletePet(api_key: String, petId: String): None
+  addPet(body: PetInput): JSON
+  updatePet(body: PetInput): JSON
+  updatePetWithForm(petId: String, name: String, status: String): JSON
+  deletePet(api_key: String, petId: String): JSON
   placeOrder(body: OrderInput): Order
 
   """
   For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
   """
-  deleteOrder(orderId: String): None
+  deleteOrder(orderId: String): JSON
 
   """This can only be done by the logged in user."""
-  createUser(body: UserInput): None
-  createUsersWithArrayInput(body: [UserInput]): None
-  createUsersWithListInput(body: [UserInput]): None
+  createUser(body: UserInput): JSON
+  createUsersWithArrayInput(body: [UserInput]): JSON
+  createUsersWithListInput(body: [UserInput]): JSON
 
   """This can only be done by the logged in user."""
-  updateUser(username: String, body: UserInput): None
+  updateUser(username: String, body: UserInput): JSON
 
   """This can only be done by the logged in user."""
-  deleteUser(username: String): None
-}
-
-type None {
-  """default field"""
-  empty: String
+  deleteUser(username: String): JSON
 }
 
 type Order {
@@ -99,14 +94,14 @@ type Query {
   getPetById(petId: String): Pet
 
   """Returns a map of status codes to quantities"""
-  getInventory: getInventory
+  getInventory: JSON
 
   """
   For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
   """
   getOrderById(orderId: String): Order
   loginUser(username: String, password: String): String
-  logoutUser: None
+  logoutUser: JSON
   getUserByName(username: String): User
 }
 

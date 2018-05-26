@@ -77,12 +77,12 @@ export const createGQLObject = (jsonSchema: JSONSchemaType, title: string, isInp
       return new graphql.GraphQLList(createGQLObject(jsonSchema.items.schema, title + '_items', isInputType, gqlTypes));
     } else if (isObjectType(jsonSchema.items)) {
       return new graphql.GraphQLList(createGQLObject(jsonSchema.items, title + '_items', isInputType, gqlTypes));
-    } else if (!jsonSchema.items){
+    } else if (!jsonSchema.items) {
       return new graphql.GraphQLList(GraphQLJSON);
     }
 
     return new graphql.GraphQLList(getPrimitiveTypes(jsonSchema.items));
-  } else if (jsonSchema.type !== '' && jsonSchema.type !== 'object' && jsonSchema.type) {
+  } else if (jsonSchema.type !== '' && (jsonSchema.type !== 'object' || !jsonSchema.properties) && jsonSchema.type) {
     return getPrimitiveTypes(jsonSchema);
   }
 
