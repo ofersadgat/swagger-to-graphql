@@ -42,12 +42,7 @@ const resolver = (endpoint: Endpoint, proxyUrl: ?(Function | string), customHead
     }
     const res = await rp(req);
     let result = null;
-    try {
-      result = JSON.parse(res);
-    } catch (e){
-
-    }
-    return result || {};
+    return JSON.parse(res);
   };
 
 const getFields = (endpoints, isMutation, gqlTypes, proxyUrl, headers): GraphQLTypeMap => {
