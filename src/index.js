@@ -41,7 +41,13 @@ const resolver = (endpoint: Endpoint, proxyUrl: ?(Function | string), customHead
       req.headers = Object.assign(customHeaders, req.headers, opts.headers);
     }
     const res = await rp(req);
-    return JSON.parse(res);
+    let result = null;
+    try {
+      result = JSON.parse(res);
+    } catch (e){
+
+    }
+    return result || {};
   };
 
 const getFields = (endpoints, isMutation, gqlTypes, proxyUrl, headers): GraphQLTypeMap => {
