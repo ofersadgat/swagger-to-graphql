@@ -13,6 +13,7 @@ const primitiveTypes = {
   number: graphql.GraphQLFloat,
   boolean: graphql.GraphQLBoolean,
   object: GraphQLJSON,
+  JSON: GraphQLJSON,
 };
 
 const isObjectType = (jsonSchema) =>
